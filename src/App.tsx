@@ -63,9 +63,9 @@ function App() {
         }
       },
       {
-        enableHighAccuracy: true,  // 启用高精度定位
-        timeout: 10000,            // 10秒超时
-        maximumAge: 0              // 不使用缓存的位置信息
+        enableHighAccuracy: false,  // 不强制使用GPS，允许使用网络定位
+        timeout: 30000,            // 增加到30秒超时
+        maximumAge: 30000          // 允许使用30秒内的缓存位置
       }
     );
   };
@@ -100,7 +100,13 @@ function App() {
         }
       },
       (err) => {
-        setError('无法获取位置信息: ' + err.message);
+        console.error('获取位置失败:', err);
+        setError('获取位置信息失败: ' + err.message);
+      },
+      {
+        enableHighAccuracy: false,  // 不强制使用GPS，允许使用网络定位
+        timeout: 30000,            // 增加到30秒超时
+        maximumAge: 30000          // 允许使用30秒内的缓存位置
       }
     );
   };  const handleCreatePlaceWithNote = (e: FormEvent<HTMLFormElement>) => {
